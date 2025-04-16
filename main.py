@@ -5,6 +5,8 @@ import pandas as pd
 from scripts.model_training import train_model
 from scripts.model_inference import load_model, predict_new_data
 from scripts.data_preprocessing import load_and_clean_data, preprocess_data
+from utils import haversine, time_cal
+
 
 # Step 1: Check if the model pickle file exists
 model_path = './artifacts/rf.pkl'
@@ -14,11 +16,12 @@ def run_inference():
     # Load cleaned data (make sure data preprocessing steps are applied)
     # df_clean = load_and_clean_data('data\yellow_tripdata_2015-01 .csv')
 
-    # New input to predict
+    dist = haversine(40.757336,-73.985994,40.713051,-74.007233)
+    time = time_cal(origin=(40.757336,-73.985994),destination=(40.713051,-74.007233))
     new_input = pd.DataFrame([{
-        'passenger_count': 3,
-        'trip_distance': 4.4,
-        'trip_duration_minutes': 10.44
+    'passenger_count': 3,
+    'trip_distance': dist,
+    'trip_duration_minutes': time
     }])
 
     # Load the model (if it exists)
